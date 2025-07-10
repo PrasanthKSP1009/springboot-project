@@ -3,18 +3,16 @@ package com.example.springbootfirst.services;
 import com.example.springbootfirst.models.RegisterDetails;
 import com.example.springbootfirst.models.UserDetailsDto;
 import com.example.springbootfirst.repository.RegisterDetailsRepository;
-import com.example.springbootfirst.repository.RegisterRepository;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.security.core.userdetails.UsernameNotFoundException;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
-import java.util.Set;
-import java.util.stream.Collectors;
 
 @Service
 public class EmployeeService {
-    @Autowired RegisterDetailsRepository registerDetailsRepository;
+    @Autowired
+    RegisterDetailsRepository registerDetailsRepository;
+
 
     public List<RegisterDetails> getMethod() {
         return registerDetailsRepository.findAll();
@@ -24,14 +22,9 @@ public class EmployeeService {
         return registerDetailsRepository.findById(empId).orElse(new RegisterDetails());
     }
 
-    public Set<String> getRoleNames(String username) {
-        RegisterDetails user = registerDetailsRepository.findByUserName(username)
-                .orElseThrow(() -> new RuntimeException("User not found"));
-
-        return user.getRoles().stream()
-                .map(role -> role.getRoleName())
-                .collect(Collectors.toSet());
-    }
+//    public List<RegisterDetails> getEmployeeByJob() {
+//        return registerDetailsRepository.findByRole();
+//    }
 
     public String addEmployee(RegisterDetails employee) {
         registerDetailsRepository.save(employee);

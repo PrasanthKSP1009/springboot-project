@@ -9,8 +9,6 @@ import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
-import java.util.Set;
-import java.util.stream.Collectors;
 
 @RestController
 public class EmployeeController {
@@ -35,18 +33,22 @@ public class EmployeeController {
     @GetMapping("/employee/{empId}")
     @PreAuthorize("hasAnyRole('ADMIN','USER')")
     public RegisterDetails getEmployeeById(@PathVariable int empId){
+        System.out.println();
         return employeeService.getEmployeeById(empId);
     }
 
-    @GetMapping("/roles/{username}")
-    public Set<String> getRoles(@PathVariable String username) {
-        return employeeService.getRoleNames(username);
-    }
 
+
+//    @PreAuthorize("hasAnyRole('ADMIN','USER')")
+//    @GetMapping("/employee/job/{job}")
+//    public List<RegisterDetails> getEmployeeByJob(@PathVariable String job){
+//        return employeeService.getEmployeeByJob(job);
+//    }
 
     @PreAuthorize("hasRole('ADMIN')")
     @PostMapping("/employee")
     public String postMethod(@RequestBody RegisterDetails employee){
+//        Employee employee = new Employee(5,"Sivagami", "Business");
         return employeeService.addEmployee(employee);
     }
 
