@@ -31,7 +31,7 @@ public class EmployeeController {
 
 
     @GetMapping("/employee/{empId}")
-    @PreAuthorize("hasAnyRole('ADMIN','USER')")
+    @PreAuthorize("hasAnyRole('USER')")
     public RegisterDetails getEmployeeById(@PathVariable int empId){
         System.out.println();
         return employeeService.getEmployeeById(empId);
@@ -47,9 +47,9 @@ public class EmployeeController {
 
     @PreAuthorize("hasRole('ADMIN')")
     @PostMapping("/employee")
-    public String postMethod(@RequestBody RegisterDetails employee){
+    public String postMethod(@RequestBody UserDetailsDto employee){
 //        Employee employee = new Employee(5,"Sivagami", "Business");
-        return employeeService.addEmployee(employee);
+        return employeeService.addNewEmployee(employee);
     }
 
     @PreAuthorize("hasRole('ADMIN')")
