@@ -37,8 +37,10 @@ class EmployeeControllerTest {
     void testGetMethod(){
         RegisterDetails emp1 = new RegisterDetails();
         RegisterDetails emp2 = new RegisterDetails();
-        when(employeeService.getMethod()).thenReturn(Arrays.asList(emp1,emp2));
-        List<RegisterDetails> result = employeeController.getMethod();
+        when(employeeService.getMethod()).
+                thenReturn(Arrays.asList(emp1,emp2));
+        List<RegisterDetails> result =
+                employeeController.getMethod();
         assertEquals(2,result.size());
     }
 

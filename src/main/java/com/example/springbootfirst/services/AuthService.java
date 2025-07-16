@@ -1,6 +1,7 @@
 package com.example.springbootfirst.services;
 
 import com.example.springbootfirst.jwt.JwtTokenProvider;
+import com.example.springbootfirst.models.JwtResponse;
 import com.example.springbootfirst.models.RegisterDetails;
 import com.example.springbootfirst.models.Roles;
 import com.example.springbootfirst.models.UserDetailsDto;
@@ -13,10 +14,13 @@ import org.springframework.security.authentication.UsernamePasswordAuthenticatio
 import org.springframework.security.core.Authentication;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
+import org.springframework.web.bind.annotation.CrossOrigin;
 
 import java.util.HashSet;
+import java.util.List;
 import java.util.Optional;
 import java.util.Set;
+import java.util.stream.Collectors;
 
 @Service
 public class AuthService {
@@ -58,12 +62,17 @@ public class AuthService {
         return "Employee Added Successfully";
     }
 
-    public String authenticate(RegisterDetails login) {
-        Authentication authentication =
-                authenticationManager.authenticate(
-                        new UsernamePasswordAuthenticationToken(
-                                login.getUserName(),login.getPassword()));
-        return jwtTokenProvider.generateToken(authentication);
+    public JwtResponse authenticate(RegisterDetails login) {
+        Authentication authentication = authenticationManager.authenticate(
+                new UsernamePasswordAuthenticationToken(login.getUserName(), login.getPassword())
+        );
+        String token = jwtTokenProvider.generateToken(authentication);
+        String username = login.getUserName();
+        List<String> roles = authentication.getAuthorities().stream()
+                .map(role -> role.getAuthority())
+                .collect(Collectors.toList());
+        String joinedRoles = String.join(",", roles);
+        return new JwtResponse(token, username, joinedRoles);
     }
 
     public Optional<RegisterDetails> getUserByUsername(String username){

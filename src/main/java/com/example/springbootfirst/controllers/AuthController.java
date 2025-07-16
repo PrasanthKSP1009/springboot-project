@@ -1,5 +1,6 @@
 package com.example.springbootfirst.controllers;
 
+import com.example.springbootfirst.models.JwtResponse;
 import com.example.springbootfirst.models.RegisterDetails;
 import com.example.springbootfirst.models.UserDetailsDto;
 import com.example.springbootfirst.services.AuthService;
@@ -7,7 +8,6 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 
 @RestController
-@CrossOrigin("*")
 @RequestMapping("/api/auth")
 public class AuthController {
 
@@ -20,7 +20,7 @@ public class AuthController {
     }
 
     @PostMapping("/login")
-    public String Login(@RequestBody RegisterDetails login){
+    public JwtResponse login(@RequestBody RegisterDetails login) {
         return authService.authenticate(login);
     }
 
