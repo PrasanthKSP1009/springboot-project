@@ -11,7 +11,7 @@ public class CorsConfig implements WebMvcConfigurer {
   public void addCorsMappings(CorsRegistry registry) {
     registry.addMapping("/**")
             .allowedOrigins("http://localhost:5173",
-                    "https://springboot-project-0j6s.onrender.com")
+                    "https://springboot-react-ems-wheat.vercel.app/")
             .allowedMethods("GET", "POST", "PUT", "DELETE")
             .allowedHeaders("*")
             .allowCredentials(true);
